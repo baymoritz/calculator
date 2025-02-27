@@ -45,6 +45,7 @@ body {
     margin-bottom: 10px;
     background-color: lightgray;
     color: black;
+    height: 100px;
 }
 .calculator {
     background-color: black;
