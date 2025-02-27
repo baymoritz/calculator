@@ -8,7 +8,11 @@ const display = document.querySelector(".display")
 const buttons = document.querySelectorAll("button")
 
 function changeTextinDisplay(text) {
-    display.textContent = text;
+    if (typeof text === "number") {
+        display.textContent = Number(text.toFixed(10)); // Rounds to 10 decimal places
+    } else {
+        display.textContent = text;
+    }
 }
 
 buttons.forEach((button) => {
@@ -20,22 +24,22 @@ buttons.forEach((button) => {
     )
 });
 
-const numberButtons = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+const numberButtons = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
 
 function getNumberVariables(button) {
     if (numberButtons.includes(button)) {
-        numberVisibleDisplay = Number(lastClickedButton);
+        numberVisibleDisplay = lastClickedButton;
         display.textContent += numberVisibleDisplay;
 
     } else if (operationKeys.includes(button)) {
         numberInMemory = Number(display.textContent)
         console.log(numberInMemory)
-        display.textContent = ""
+        changeTextinDisplay("")
         last_operation = button;
 
     } else if (button == "=") {
         numberVisibleDisplay = Number(display.textContent)
-        display.textContent = operate(numberInMemory, numberVisibleDisplay, last_operation)
+        changeTextinDisplay(operate(numberInMemory, numberVisibleDisplay, last_operation))
 
     } else if (button == "AC") {
         resetCalc()
@@ -153,7 +157,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return result = a / b;
+    return b == 0 ? changeTextinDisplay("nonono") : result = a / b;
 }
 
 function transformPerc(a) {
